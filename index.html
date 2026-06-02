@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Redesign Studio Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 HTML Redesign Studio</h1>
+            <p class="subtitle">שיפור משמעותי של דפי HTML שנוצרו באוטומציה</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📄</div>
+                <div class="stat-value" id="total-templates">0</div>
+                <div class="stat-label">סה"כ תבניות</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✨</div>
+                <div class="stat-value" id="redesigned">0</div>
+                <div class="stat-label">עוצבו מחדש</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔄</div>
+                <div class="stat-value" id="in-progress">0</div>
+                <div class="stat-label">בתהליך</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="approved">0</div>
+                <div class="stat-label">אושרו</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="section">
+                <h2>🎯 תבניות אחרונות</h2>
+                <div class="table-container">
+                    <table id="templates-table">
+                        <thead>
+                            <tr>
+                                <th>שם התבנית</th>
+                                <th>סטטוס</th>
+                                <th>שיפור</th>
+                                <th>תאריך</th>
+                                <th>פעולות</th>
+                            </tr>
+                        </thead>
+                        <tbody id="templates-tbody">
+                            <tr><td colspan="5">טוען נתונים...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 סטטיסטיקות שיפור</h2>
+                <div class="improvement-stats">
+                    <div class="metric">
+                        <div class="metric-label">מהירות טעינה</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 85%;">85%</div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">ציון Lighthouse</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 92%;">92%</div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">נגישות</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 88%;">88%</div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">SEO</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 90%;">90%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔄 תהליך עבודה</h2>
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-icon">📥</div>
+                    <div class="step-title">קבלה מ-n8n</div>
+                    <div class="step-desc">HTML גולמי</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">🎨</div>
+                    <div class="step-title">עיצוב מחדש</div>
+                    <div class="step-desc">שיפור ויזואלי</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">⚡</div>
+                    <div class="step-title">אופטימיזציה</div>
+                    <div class="step-desc">ביצועים ו-SEO</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">✅</div>
+                    <div class="step-title">QA ואישור</div>
+                    <div class="step-desc">בדיקות איכות</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">📤</div>
+                    <div class="step-title">החזרה ל-n8n</div>
+                    <div class="step-desc">תבנית משופרת</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" onclick="processQueue()">
+                🎨 עבד תור עיצוב
+            </button>
+            <button class="btn btn-secondary" onclick="runOptimization()">
+                ⚡ הרץ אופטימיזציה
+            </button>
+            <button class="btn btn-secondary" onclick="exportTemplates()">
+                📦 ייצא תבניות
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
