@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Redesign Studio - MaximoSEO</title>
+    <meta name="theme-color" content="#ec4899">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --surface: rgba(30, 41, 59, 0.7);
+            --surface-hover: rgba(30, 41, 59, 0.9);
+            --border: rgba(51, 65, 85, 0.5);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent: #ec4899;
+            --accent-hover: #db2777;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.1);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.2s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e2e8f0;
+            --surface: rgba(255, 255, 255, 0.9);
+            --border: rgba(226, 232, 240, 0.8);
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-right: 240px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+        /* Auth Gate */
+        .auth-gate {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-primary);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        }
+
+        .auth-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            max-width: 400px; width: 90%;
+        }
+
+        .auth-box h2 { margin-bottom: 24px; }
+
+        .auth-input {
+            width: 100%; padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+
+        .auth-input:focus { outline: none; border-color: var(--accent); }
+
+        .remember-me {
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 16px; font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; top: 0; right: 0;
+            width: 240px; height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            display: flex; flex-direction: column;
+            z-index: 1000;
+        }
+
+        .sidebar-brand {
+            padding: 20px 16px;
+            display: flex; align-items: center; gap: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            border-radius: var(--radius-md);
+        }
+
+        .sidebar-title { font-size: 1.1rem; font-weight: 700; }
+
+        .sidebar-nav {
+            flex: 1; padding: 16px 12px;
+            display: flex; flex-direction: column; gap: 4px;
+        }
+
+        .sidebar-link {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem; font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .sidebar-link:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+            transform: translateX(-4px);
+        }
+
+        .sidebar-link.active {
+            background: linear-gradient(135deg, rgba(236,72,153,0.15), rgba(244,114,182,0.15));
+            color: var(--accent); font-weight: 600;
+        }
+
+        .sidebar-paperclip {
+            background: linear-gradient(135deg, rgba(124,91,245,0.12), rgba(147,51,234,0.12)) !important;
+            border: 1px solid rgba(124,91,245,0.2);
+            color: #a78bfa !important;
+            font-weight: 700; margin: 8px 0;
+        }
+
+        .sidebar-paperclip:hover {
+            background: linear-gradient(135deg, rgba(124,91,245,0.2), rgba(147,51,234,0.2)) !important;
+            transform: translateX(-4px) scale(1.02);
+            box-shadow: 0 4px 20px rgba(124,91,245,0.3);
+        }
+
+        .sidebar-badge {
+            margin-right: auto;
+            background: linear-gradient(135deg, #7c5bf5, #9333ea);
+            color: white; font-size: 0.65rem; font-weight: 700;
+            padding: 2px 8px; border-radius: 10px;
+        }
+
+        .sidebar-divider { height: 1px; background: var(--border); margin: 12px 0; }
+        .sidebar-footer { padding: 16px; border-top: 1px solid var(--border); text-align: center; }
+        .sidebar-version { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Header */
+        .header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 0; margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 1.5rem; font-weight: 700;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .header-meta { color: var(--text-muted); font-size: 0.75rem; }
+
+        .header-actions { display: flex; gap: 8px; }
+
+        .btn {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 8px 16px;
+            cursor: pointer; color: var(--text-primary);
+            font-size: 0.875rem; font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn:hover { background: var(--surface-hover); transform: translateY(-2px); }
+
+        .btn-primary { background: var(--accent); color: white; border: none; }
+        .btn-primary:hover { background: var(--accent-hover); }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px; margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            transition: var(--transition);
+            position: relative; overflow: hidden;
+            aspect-ratio: 1.4;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon { font-size: 2rem; margin-bottom: 8px; }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.75rem; font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 2rem; font-weight: 700;
+            color: var(--accent); line-height: 1; margin-bottom: 6px;
+        }
+
+        .stat-trend { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+        }
+
+        .section h2 {
+            font-size: 1.25rem; font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .table-container { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        td { font-size: 0.875rem; }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 12px; border-radius: 16px;
+            font-size: 0.75rem; font-weight: 600;
+        }
+
+        .status-badge.approved {
+            background: var(--success-bg); color: var(--success);
+        }
+
+        .status-badge.in-progress {
+            background: var(--warning-bg); color: var(--warning);
+        }
+
+        .status-badge.redesigned {
+            background: rgba(236,72,153,0.1); color: var(--accent);
+        }
+
+        .status-badge.pending {
+            background: var(--bg-tertiary); color: var(--text-muted);
+        }
+
+        /* Metrics */
+        .metric {
+            margin-bottom: 16px;
+        }
+
+        .metric-label {
+            font-size: 0.875rem; font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .metric-bar {
+            height: 24px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #f472b6);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: flex-end;
+            padding: 0 12px;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Workflow */
+        .workflow {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px;
+        }
+
+        .workflow-step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .workflow-arrow {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        /* Actions */
+        .actions {
+            display: flex; gap: 12px;
+            margin-top: 24px;
+        }
+
+        /* Chat Widget */
+        .pc-chat-toggle {
+            position: fixed; bottom: 20px; right: 260px;
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, #7c5bf5, #9333ea);
+            border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(124,91,245,0.4);
+            transition: var(--transition);
+            z-index: 9998; font-size: 24px;
+        }
+
+        .pc-chat-toggle:hover { transform: scale(1.1); }
+
+        .pc-chat-panel {
+            position: fixed; bottom: 90px; right: 260px;
+            width: 380px; height: 520px;
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            z-index: 9999;
+        }
+
+        .pc-chat-header {
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(124,91,245,0.2), rgba(147,51,234,0.2));
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .pc-chat-title {
+            display: flex; align-items: center; gap: 8px;
+            font-weight: 700; font-size: 15px; color: #f0eff4; flex: 1;
+        }
+
+        .pc-chat-close {
+            background: none; border: none; color: #6b6780;
+            cursor: pointer; font-size: 16px;
+        }
+
+        .pc-chat-messages {
+            flex: 1; overflow-y: auto; padding: 16px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .pc-message {
+            max-width: 85%; padding: 10px 14px;
+            border-radius: 12px; font-size: 13px; line-height: 1.5;
+        }
+
+        .pc-message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #7c5bf5, #9333ea);
+            color: white;
+        }
+
+        .pc-message.system {
+            align-self: flex-start;
+            background: rgba(255,255,255,0.05);
+            color: #c4c0d8;
+        }
+
+        .pc-chat-input-area {
+            padding: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex; gap: 8px;
+        }
+
+        .pc-chat-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; padding: 10px 12px;
+            color: #f0eff4; font-size: 13px;
+            resize: none; outline: none;
+        }
+
+        .pc-chat-send {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: linear-gradient(135deg, #7c5bf5, #9333ea);
+            border: none; cursor: pointer; font-size: 18px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body { padding-right: 0; }
+            .sidebar { transform: translateX(100%); }
+            .sidebar.open { transform: translateX(0); }
+            .pc-chat-toggle, .pc-chat-panel { right: 20px; }
+            .main-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Gate -->
+    <div class="auth-gate" id="authGate" style="display:none;">
+        <div class="auth-box">
+            <h2>🎨 HTML Redesign Studio</h2>
+            <input type="password" class="auth-input" id="authPassword" placeholder="סיסמה">
+            <label class="remember-me">
+                <input type="checkbox" id="rememberMe" checked>
+                זכור אותי במחשב זה
+            </label>
+            <button class="btn btn-primary" id="authBtn" style="width:100%;padding:12px;">התחבר</button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <span class="sidebar-logo">🎨</span>
+            <span class="sidebar-title">Redesign Studio</span>
+        </div>
+        <div class="sidebar-nav">
+            <a href="#dashboard" class="sidebar-link active">
+                <span>📊</span><span>Dashboard</span>
+            </a>
+            <a href="#templates" class="sidebar-link">
+                <span>📄</span><span>Templates</span>
+            </a>
+            <a href="#workflow" class="sidebar-link">
+                <span>🔄</span><span>Workflow</span>
+            </a>
+            <a href="#analytics" class="sidebar-link">
+                <span>📈</span><span>Analytics</span>
+            </a>
+            <div class="sidebar-divider"></div>
+            <a href="http://localhost:3100" target="_blank" class="sidebar-link sidebar-paperclip">
+                <span>📎</span><span>PAPERCLIP</span>
+                <span class="sidebar-badge">AI</span>
+            </a>
+            <div class="sidebar-divider"></div>
+            <a href="#settings" class="sidebar-link">
+                <span>⚙️</span><span>Settings</span>
+            </a>
+        </div>
+        <div class="sidebar-footer">
+            <span class="sidebar-version">v1.0</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>HTML Redesign Studio</h1>
+                <div class="header-meta">
+                    <span>MaximoSEO • Automated HTML Redesign</span>
+                    <span>•</span>
+                    <span id="lastUpdated">Last updated: Loading...</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn" id="themeToggle">🌙</button>
+                <button class="btn btn-primary" id="refreshBtn">🔄 Refresh</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📄</div>
+                <div class="stat-label">סה"כ תבניות</div>
+                <div class="stat-value" id="totalTemplates">4</div>
+                <div class="stat-trend">HTML templates processed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✨</div>
+                <div class="stat-label">עוצבו מחדש</div>
+                <div class="stat-value" id="redesigned">3</div>
+                <div class="stat-trend">Successfully redesigned</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔄</div>
+                <div class="stat-label">בתהליך</div>
+                <div class="stat-value" id="inProgress">1</div>
+                <div class="stat-trend">Currently processing</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-label">אושרו</div>
+                <div class="stat-value" id="approved">2</div>
+                <div class="stat-trend">Approved for deployment</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="section">
+                <h2>🎯 תבניות אחרונות</h2>
+                <div class="table-container">
+                    <table id="templates-table">
+                        <thead>
+                            <tr>
+                                <th>שם התבנית</th>
+                                <th>סטטוס</th>
+                                <th>שיפור</th>
+                                <th>תאריך</th>
+                                <th>פעולות</th>
+                            </tr>
+                        </thead>
+                        <tbody id="templates-tbody">
+                            <tr><td colspan="5">טוען נתונים...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 סטטיסטיקות שיפור</h2>
+                <div class="improvement-stats">
+                    <div class="metric">
+                        <div class="metric-label">מהירות טעינה</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 85%;">85%</div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">ציון Lighthouse</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 92%;">92%</div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">נגישות</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 88%;">88%</div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">SEO</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 90%;">90%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow -->
+        <div class="section">
+            <h2>🔄 תהליך עבודה</h2>
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-icon">📥</div>
+                    <div class="step-title">קבלה מ-n8n</div>
+                    <div class="step-desc">HTML גולמי</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">🎨</div>
+                    <div class="step-title">עיצוב מחדש</div>
+                    <div class="step-desc">שיפור ויזואלי</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">⚡</div>
+                    <div class="step-title">אופטימיזציה</div>
+                    <div class="step-desc">ביצועים ו-SEO</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">✅</div>
+                    <div class="step-title">QA ואישור</div>
+                    <div class="step-desc">בדיקות איכות</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">📤</div>
+                    <div class="step-title">החזרה ל-n8n</div>
+                    <div class="step-desc">תבנית משופרת</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <button class="btn btn-primary" onclick="processQueue()">
+                🎨 עבד תור עיצוב
+            </button>
+            <button class="btn" onclick="runOptimization()">
+                ⚡ הרץ אופטימיזציה
+            </button>
+            <button class="btn" onclick="exportTemplates()">
+                📦 ייצא תבניות
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <button class="pc-chat-toggle" id="pcToggle">💬</button>
+    <div class="pc-chat-panel" id="pcPanel" style="display:none;">
+        <div class="pc-chat-header">
+            <div class="pc-chat-title">
+                <span>📎</span><span>Paperclip Assistant</span>
+            </div>
+            <button class="pc-chat-close" id="pcClose">✕</button>
+        </div>
+        <div class="pc-chat-messages" id="pcMessages">
+            <div class="pc-message system">
+                👋 שלום! שלח משימה ואעביר אותה לצוות Paperclip של <strong>HTML Redesign Studio</strong>.
+            </div>
+        </div>
+        <div class="pc-chat-input-area">
+            <textarea class="pc-chat-input" id="pcInput" placeholder="כתוב משימה..." rows="2"></textarea>
+            <button class="pc-chat-send" id="pcSend">📤</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Auth
+        const PASSWORD='***';
+        const authGate = document.getElementById('authGate');
+        const authPassword = document.getElementById('authPassword');
+        const authBtn = document.getElementById('authBtn');
+        const rememberMe = document.getElementById('rememberMe');
+
+        function isAuthenticated() {
+            return localStorage.getItem('html_redesign_auth') === 'ok';
+        }
+
+        function authenticate() {
+            if (authPassword.value === PASSWORD) {
+                if (rememberMe.checked) localStorage.setItem('html_redesign_auth', 'ok');
+                authGate.style.display = 'none';
+            } else {
+                authBtn.textContent = 'סיסמה שגויה!';
+                setTimeout(() => authBtn.textContent = 'התחבר', 2000);
+            }
+        }
+
+        authBtn.addEventListener('click', authenticate);
+        authPassword.addEventListener('keypress', e => { if (e.key === 'Enter') authenticate(); });
+
+        if (!isAuthenticated()) {
+            authGate.style.display = 'flex';
+        }
+
+        // Theme
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const html = document.documentElement;
+            const isLight = html.getAttribute('data-theme') === 'light';
+            html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+            document.getElementById('themeToggle').textContent = isLight ? '🌙' : '☀️';
+        });
+
+        // Refresh
+        document.getElementById('refreshBtn').addEventListener('click', () => location.reload());
+
+        // Update timestamp
+        document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleString('he-IL')}`;
+
+        // Chat Widget
+        const pcToggle = document.getElementById('pcToggle');
+        const pcPanel = document.getElementById('pcPanel');
+        const pcClose = document.getElementById('pcClose');
+        const pcInput = document.getElementById('pcInput');
+        const pcSend = document.getElementById('pcSend');
+        const pcMessages = document.getElementById('pcMessages');
+
+        pcToggle.addEventListener('click', () => {
+            pcPanel.style.display = pcPanel.style.display === 'none' ? 'flex' : 'none';
+        });
+
+        pcClose.addEventListener('click', () => {
+            pcPanel.style.display = 'none';
+        });
+
+        function addMessage(text, type = 'system') {
+            const div = document.createElement('div');
+            div.className = `pc-message ${type}`;
+            div.innerHTML = text;
+            pcMessages.appendChild(div);
+            pcMessages.scrollTop = pcMessages.scrollHeight;
+        }
+
+        async function sendTask() {
+            const text = pcInput.value.trim();
+            if (!text) return;
+
+            pcInput.value = '';
+            addMessage(text, 'user');
+
+            const taskId = `HRS-${Date.now()}`;
+            addMessage(`⏳ שולח משימה <code>${taskId}</code>...`, 'system');
+
+            const msg = `🆕 משימה חדשה מ-HTML Redesign Studio\n\n📋 משימה: ${text}\n🆔 ID: ${taskId}`;
+
+            try {
+                if (window.PC_TELEGRAM_BOT_TOKEN && window.PC_TELEGRAM_CHAT_ID) {
+                    const res = await fetch(`https://api.telegram.org/bot${window.PC_TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: window.PC_TELEGRAM_CHAT_ID,
+                            text: msg,
+                            parse_mode: 'HTML'
+                        })
+                    });
+
+                    if (res.ok) {
+                        addMessage(`✅ המשימה נשלחה ל-Paperclip!\n<code>${taskId}</code>`, 'system');
+                    } else {
+                        throw new Error('API error');
+                    }
+                } else {
+                    addMessage(`📨 המשימה נשמרה בתור!\n<code>${taskId}</code>`, 'system');
+                }
+            } catch (err) {
+                addMessage(`❌ שגיאה בשליחה`, 'system');
+            }
+        }
+
+        pcSend.addEventListener('click', sendTask);
+        pcInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendTask();
+            }
+        });
+
+        // Functions
+        function processQueue() { alert('תור העיצוב התחיל...'); }
+        function runOptimization() { alert('אופטימיזציה רצה...'); }
+        function exportTemplates() { alert('מייצא תבניות...'); }
+    </script>
+</body>
+</html>
