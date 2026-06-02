@@ -14,6 +14,146 @@
             <p class="subtitle">שיפור אוטומטי של עיצוב HTML עם גלריית תבניות</p>
         </header>
 
+        <!-- Navigation Bar -->
+        <nav class="dashboard-nav">
+            <a href="https://wp-page-monitor-dashboard.onrender.com" target="_blank" class="nav-link">
+                <span class="nav-icon">🌐</span>
+                <span>WP Page Monitor</span>
+            </a>
+            <a href="https://seo-audit-pro.onrender.com" target="_blank" class="nav-link nav-seo">
+                <span class="nav-icon">🔍</span>
+                <span>SEO Audit Pro</span>
+                <span class="nav-badge">NEW</span>
+            </a>
+            <a href="http://localhost:3100" target="_blank" class="nav-link nav-paperclip">
+                <span class="nav-icon">📎</span>
+                <span>Paperclip</span>
+                <span class="nav-badge">AI</span>
+            </a>
+        </nav>
+
+        <!-- Design Skills Directory -->
+        <section class="skills-section">
+            <h2>🎯 Design Skills Directory</h2>
+            <p class="section-description">ייבוא סקילים של דיזיין ממקורות מובילים</p>
+            
+            <div class="skills-sources">
+                <div class="skill-source" data-source="dribbble">
+                    <div class="source-icon">🏀</div>
+                    <h3>Dribbble</h3>
+                    <p>עיצובים מובילים מהקהילה</p>
+                    <button onclick="loadSkills('dribbble')" class="btn-load">טען סקילים</button>
+                </div>
+                <div class="skill-source" data-source="behance">
+                    <div class="source-icon">🎨</div>
+                    <h3>Behance</h3>
+                    <p>פרויקטים מקצועיים</p>
+                    <button onclick="loadSkills('behance')" class="btn-load">טען סקילים</button>
+                </div>
+                <div class="skill-source" data-source="awwwards">
+                    <div class="source-icon">🏆</div>
+                    <h3>Awwwards</h3>
+                    <p>אתרים זוכי פרסים</p>
+                    <button onclick="loadSkills('awwwards')" class="btn-load">טען סקילים</button>
+                </div>
+                <div class="skill-source" data-source="siteinspire">
+                    <div class="source-icon">💡</div>
+                    <h3>SiteInspire</h3>
+                    <p>השראות עיצוביות</p>
+                    <button onclick="loadSkills('siteinspire')" class="btn-load">טען סקילים</button>
+                </div>
+            </div>
+            
+            <div id="skillsResults" class="skills-results" style="display:none;">
+                <h3>סקילים שנטענו:</h3>
+                <div id="skillsList" class="skills-list"></div>
+            </div>
+        </section>
+
+        <!-- Element Library -->
+        <section class="elements-section">
+            <h2>🧩 Element Library</h2>
+            <p class="section-description">ספריית אלמנטים מוכנים לשימוש</p>
+            
+            <div class="element-categories">
+                <button class="element-cat active" data-cat="all">הכל</button>
+                <button class="element-cat" data-cat="headers">Headers</button>
+                <button class="element-cat" data-cat="heroes">Heroes</button>
+                <button class="element-cat" data-cat="cards">Cards</button>
+                <button class="element-cat" data-cat="buttons">Buttons</button>
+                <button class="element-cat" data-cat="forms">Forms</button>
+                <button class="element-cat" data-cat="footers">Footers</button>
+            </div>
+            
+            <div id="elementsGrid" class="elements-grid"></div>
+        </section>
+
+        <!-- Design Inspiration Feed -->
+        <section class="inspiration-section">
+            <h2>✨ Design Inspiration</h2>
+            <p class="section-description">פיד השראות עיצוביות מתעדכן</p>
+            
+            <div class="inspiration-controls">
+                <button onclick="refreshInspiration()" class="btn-refresh">
+                    <span>🔄</span> רענן השראות
+                </button>
+                <select id="inspirationCategory" onchange="filterInspiration()">
+                    <option value="all">כל הקטגוריות</option>
+                    <option value="minimal">מינימליסטי</option>
+                    <option value="modern">מודרני</option>
+                    <option value="creative">קריאייטיבי</option>
+                    <option value="corporate">תאגידי</option>
+                </select>
+            </div>
+            
+            <div id="inspirationFeed" class="inspiration-feed"></div>
+        </section>
+
+        <!-- Advanced Design Tools -->
+        <section class="tools-section">
+            <h2>🛠️ כלי עיצוב מתקדמים</h2>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>🎨 Color Palette Generator</h3>
+                    <div class="color-generator">
+                        <button onclick="generatePalette()" class="btn-generate">צור פלטה חדשה</button>
+                        <div id="generatedPalette" class="generated-palette"></div>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>🔤 Typography Combinations</h3>
+                    <div class="typography-generator">
+                        <button onclick="generateTypography()" class="btn-generate">צור שילוב</button>
+                        <div id="generatedTypography" class="generated-typography"></div>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>📐 Layout Grid Builder</h3>
+                    <div class="grid-builder">
+                        <label>עמודות: <input type="number" id="gridColumns" value="12" min="1" max="24"></label>
+                        <label>רווח (px): <input type="number" id="gridGap" value="20" min="0" max="100"></label>
+                        <button onclick="previewGrid()" class="btn-generate">תצוגה מקדימה</button>
+                        <div id="gridPreview" class="grid-preview"></div>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>📱 Responsive Preview</h3>
+                    <div class="responsive-preview">
+                        <div class="device-buttons">
+                            <button onclick="previewDevice('mobile')">📱 Mobile</button>
+                            <button onclick="previewDevice('tablet')">📱 Tablet</button>
+                            <button onclick="previewDevice('desktop')">🖥️ Desktop</button>
+                        </div>
+                        <div id="devicePreview" class="device-preview-frame"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Site Scanner Section -->
         <section class="scanner-section">
             <h2>🔍 סורק אתר</h2>
@@ -92,6 +232,105 @@
                         <tr><td colspan="5">טוען נתונים...</td></tr>
                     </tbody>
                 </table>
+            </div>
+        </section>
+
+        <!-- GBP Scraper & Analyzer -->
+        <section class="gbp-section">
+            <h2>📍 Google Business Profile Analyzer</h2>
+            <p class="section-description">בדיקה מקיפה של פרופיל עסקי בגוגל עם הצעות שיפור</p>
+            
+            <div class="gbp-input">
+                <input type="text" id="gbpBusinessName" placeholder="שם העסק (למשל: MaximoSEO)">
+                <input type="text" id="gbpLocation" placeholder="מיקום (למשל: תל אביב)">
+                <button onclick="analyzeGBP()" class="btn-gbp">🔍 נתח פרופיל</button>
+            </div>
+            
+            <div id="gbpResults" class="gbp-results" style="display:none;">
+                <div class="gbp-overview">
+                    <h3>📊 סקירה כללית</h3>
+                    <div class="gbp-stats">
+                        <div class="gbp-stat">
+                            <span class="stat-label">ציון כללי</span>
+                            <span class="stat-value" id="gbpScore">-</span>
+                        </div>
+                        <div class="gbp-stat">
+                            <span class="stat-label">ביקורות</span>
+                            <span class="stat-value" id="gbpReviews">-</span>
+                        </div>
+                        <div class="gbp-stat">
+                            <span class="stat-label">דירוג ממוצע</span>
+                            <span class="stat-value" id="gbpRating">-</span>
+                        </div>
+                        <div class="gbp-stat">
+                            <span class="stat-label">תמונות</span>
+                            <span class="stat-value" id="gbpPhotos">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gbp-issues">
+                    <h3>⚠️ בעיות שזוהו</h3>
+                    <div id="gbpIssuesList" class="issues-list"></div>
+                </div>
+                
+                <div class="gbp-recommendations">
+                    <h3>💡 הצעות שיפור</h3>
+                    <div id="gbpRecommendationsList" class="recommendations-list"></div>
+                </div>
+                
+                <div class="gbp-seo-tips">
+                    <h3>🎯 טיפים ל-SEO מקומי</h3>
+                    <div id="gbpSEOTips" class="seo-tips-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Design Assistant -->
+        <section class="ai-assistant-section">
+            <h2>🤖 AI Design Assistant</h2>
+            <p class="section-description">עוזר עיצוב חכם מבוסס AI</p>
+            
+            <div class="ai-chat-container">
+                <div id="aiChatHistory" class="ai-chat-history">
+                    <div class="ai-message">
+                        <strong>🤖 AI:</strong> שלום! אני עוזר העיצוב שלך. איך אוכל לעזור לך היום?
+                    </div>
+                </div>
+                
+                <div class="ai-chat-input">
+                    <input type="text" id="aiChatInput" placeholder="שאל אותי על עיצוב, צבעים, טיפוגרפיה..." onkeypress="if(event.key==='Enter') sendAIMessage()">
+                    <button onclick="sendAIMessage()">שלח</button>
+                </div>
+                
+                <div class="ai-quick-actions">
+                    <button onclick="aiSuggest('colors')" class="btn-quick">🎨 הצע פלטת צבעים</button>
+                    <button onclick="aiSuggest('fonts')" class="btn-quick">🔤 הצע שילוב פונטים</button>
+                    <button onclick="aiSuggest('layout')" class="btn-quick">📐 הצע מבנה</button>
+                    <button onclick="aiSuggest('improve')" class="btn-quick">✨ שפר עיצוב קיים</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Design System Exporter -->
+        <section class="exporter-section">
+            <h2>📦 Design System Exporter</h2>
+            <p class="section-description">ייצוא מערכת עיצוב מלאה לקוד</p>
+            
+            <div class="exporter-controls">
+                <select id="exportFormat">
+                    <option value="css">CSS Variables</option>
+                    <option value="tailwind">Tailwind Config</option>
+                    <option value="scss">SCSS Variables</option>
+                    <option value="json">JSON Token</option>
+                </select>
+                <button onclick="exportDesignSystem()" class="btn-export">📥 ייצא מערכת עיצוב</button>
+            </div>
+            
+            <div id="exportPreview" class="export-preview" style="display:none;">
+                <h3>תצוגה מקדימה:</h3>
+                <pre><code id="exportCode"></code></pre>
+                <button onclick="copyExportCode()" class="btn-copy">📋 העתק קוד</button>
             </div>
         </section>
 
@@ -465,7 +704,243 @@
             document.getElementById('redesigned').textContent = sampleTemplates.filter(t => t.status === 'redesigned').length;
             document.getElementById('in-progress').textContent = sampleTemplates.filter(t => t.status === 'in-progress').length;
             document.getElementById('approved').textContent = sampleTemplates.filter(t => t.status === 'approved').length;
+            
+            // Initialize new sections
+            initElementLibrary();
+            initInspirationFeed();
         });
+        
+        // ========================================
+        // Design Skills Directory Functions
+        // ========================================
+        function loadSkills(source) {
+            const skillsData = {
+                'dribbble': [
+                    { name: 'Modern UI Kit', type: 'UI Kit', rating: 4.8 },
+                    { name: 'Dashboard Components', type: 'Components', rating: 4.9 },
+                    { name: 'Mobile App Design', type: 'Mobile', rating: 4.7 }
+                ],
+                'behance': [
+                    { name: 'Brand Identity System', type: 'Branding', rating: 4.9 },
+                    { name: 'E-commerce Templates', type: 'E-commerce', rating: 4.8 },
+                    { name: 'Portfolio Layouts', type: 'Portfolio', rating: 4.6 }
+                ],
+                'awwwards': [
+                    { name: 'Award-Winning Animations', type: 'Animation', rating: 5.0 },
+                    { name: 'Creative Interactions', type: 'Interaction', rating: 4.9 },
+                    { name: 'Innovative Navigation', type: 'Navigation', rating: 4.8 }
+                ],
+                'siteinspire': [
+                    { name: 'Minimalist Layouts', type: 'Minimal', rating: 4.7 },
+                    { name: 'Typography Focused', type: 'Typography', rating: 4.8 },
+                    { name: 'Clean Grid Systems', type: 'Grid', rating: 4.6 }
+                ]
+            };
+            
+            const skills = skillsData[source] || [];
+            const resultsDiv = document.getElementById('skillsResults');
+            const listDiv = document.getElementById('skillsList');
+            
+            listDiv.innerHTML = skills.map(skill => `
+                <div class="skill-item">
+                    <h4>${skill.name}</h4>
+                    <p>סוג: ${skill.type}</p>
+                    <p>דירוג: ${'⭐'.repeat(Math.floor(skill.rating))} ${skill.rating}</p>
+                    <button onclick="applySkill('${source}', '${skill.name}')" class="btn-small">החל</button>
+                </div>
+            `).join('');
+            
+            resultsDiv.style.display = 'block';
+        }
+        
+        function applySkill(source, skillName) {
+            alert(`✅ הוחל סקיל: ${skillName} מ-${source}\nהעיצוב יתעדכן בתבניות הקיימות.`);
+        }
+        
+        // ========================================
+        // Element Library Functions
+        // ========================================
+        const elementLibrary = {
+            'headers': [
+                { name: 'Modern Header', preview: '<h1 style="font-size:2rem;color:#6366f1;">Modern Header</h1>' },
+                { name: 'Minimal Header', preview: '<h1 style="font-size:1.5rem;font-weight:300;">Minimal Header</h1>' }
+            ],
+            'heroes': [
+                { name: 'Gradient Hero', preview: '<div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:40px;color:white;text-align:center;border-radius:8px;"><h2>Hero Section</h2><p>With gradient background</p></div>' },
+                { name: 'Image Hero', preview: '<div style="background:#1e293b;padding:40px;color:white;text-align:center;border-radius:8px;"><h2>Image Hero</h2><p>With overlay</p></div>' }
+            ],
+            'cards': [
+                { name: 'Shadow Card', preview: '<div style="background:white;padding:20px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.1);"><h3>Card Title</h3><p>Card content</p></div>' },
+                { name: 'Border Card', preview: '<div style="background:white;padding:20px;border-radius:8px;border:2px solid #e2e8f0;"><h3>Card Title</h3><p>Card content</p></div>' }
+            ],
+            'buttons': [
+                { name: 'Primary Button', preview: '<button style="background:#6366f1;color:white;padding:12px 24px;border:none;border-radius:6px;font-weight:600;cursor:pointer;">Primary</button>' },
+                { name: 'Outline Button', preview: '<button style="background:transparent;color:#6366f1;padding:12px 24px;border:2px solid #6366f1;border-radius:6px;font-weight:600;cursor:pointer;">Outline</button>' }
+            ],
+            'forms': [
+                { name: 'Modern Input', preview: '<input type="text" placeholder="Modern input" style="padding:12px;border:2px solid #e2e8f0;border-radius:6px;width:100%;font-size:1rem;">' },
+                { name: 'Search Input', preview: '<div style="position:relative;"><input type="text" placeholder="Search..." style="padding:12px 12px 12px 40px;border:2px solid #e2e8f0;border-radius:6px;width:100%;"><span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);">🔍</span></div>' }
+            ],
+            'footers': [
+                { name: 'Simple Footer', preview: '<div style="background:#1e293b;color:white;padding:20px;text-align:center;border-radius:8px;"><p>© 2026 Company. All rights reserved.</p></div>' },
+                { name: 'Multi-column Footer', preview: '<div style="background:#1e293b;color:white;padding:20px;border-radius:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;"><div><h4>About</h4></div><div><h4>Links</h4></div><div><h4>Contact</h4></div></div>' }
+            ]
+        };
+        
+        function initElementLibrary() {
+            renderElements('all');
+            
+            document.querySelectorAll('.element-cat').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.element-cat').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    renderElements(e.target.dataset.cat);
+                });
+            });
+        }
+        
+        function renderElements(category) {
+            const grid = document.getElementById('elementsGrid');
+            let elements = [];
+            
+            if (category === 'all') {
+                Object.keys(elementLibrary).forEach(cat => {
+                    elements = elements.concat(elementLibrary[cat].map(el => ({...el, category: cat})));
+                });
+            } else {
+                elements = elementLibrary[category] || [];
+            }
+            
+            grid.innerHTML = elements.map(el => `
+                <div class="element-card" onclick="copyElement('${encodeURIComponent(el.preview)}')">
+                    <div class="element-preview">${el.preview}</div>
+                    <div class="element-info">
+                        <h4>${el.name}</h4>
+                        <p>לחץ להעתקת הקוד</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function copyElement(encodedHtml) {
+            const html = decodeURIComponent(encodedHtml);
+            navigator.clipboard.writeText(html).then(() => {
+                alert('✅ הקוד הועתק ללוח!');
+            });
+        }
+        
+        // ========================================
+        // Design Inspiration Feed Functions
+        // ========================================
+        const inspirationData = [
+            { title: 'Minimalist Portfolio', category: 'minimal', image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400', description: 'Clean and simple design' },
+            { title: 'Modern Dashboard', category: 'modern', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400', description: 'Data visualization design' },
+            { title: 'Creative Agency', category: 'creative', image: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400', description: 'Bold and colorful design' },
+            { title: 'Corporate Website', category: 'corporate', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', description: 'Professional business design' }
+        ];
+        
+        function initInspirationFeed() {
+            renderInspiration(inspirationData);
+        }
+        
+        function renderInspiration(data) {
+            const feed = document.getElementById('inspirationFeed');
+            feed.innerHTML = data.map(item => `
+                <div class="inspiration-card">
+                    <img src="${item.image}" alt="${item.title}" class="inspiration-image">
+                    <div class="inspiration-info">
+                        <h4>${item.title}</h4>
+                        <p>${item.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function refreshInspiration() {
+            // Shuffle the array
+            const shuffled = [...inspirationData].sort(() => Math.random() - 0.5);
+            renderInspiration(shuffled);
+        }
+        
+        function filterInspiration() {
+            const category = document.getElementById('inspirationCategory').value;
+            const filtered = category === 'all' 
+                ? inspirationData 
+                : inspirationData.filter(item => item.category === category);
+            renderInspiration(filtered);
+        }
+        
+        // ========================================
+        // Advanced Design Tools Functions
+        // ========================================
+        function generatePalette() {
+            const colors = [];
+            for (let i = 0; i < 5; i++) {
+                const hue = Math.floor(Math.random() * 360);
+                const saturation = Math.floor(Math.random() * 40) + 60;
+                const lightness = Math.floor(Math.random() * 30) + 40;
+                colors.push(`hsl(${hue}, ${saturation}%, ${lightness}%)`);
+            }
+            
+            const paletteDiv = document.getElementById('generatedPalette');
+            paletteDiv.innerHTML = colors.map(color => `
+                <div class="color-swatch" style="background:${color};" onclick="copyColor('${color}')" title="${color}"></div>
+            `).join('');
+        }
+        
+        function copyColor(color) {
+            navigator.clipboard.writeText(color).then(() => {
+                alert(`✅ הצבע ${color} הועתק!`);
+            });
+        }
+        
+        function generateTypography() {
+            const fontPairs = [
+                { heading: 'Playfair Display', body: 'Source Sans Pro' },
+                { heading: 'Montserrat', body: 'Open Sans' },
+                { heading: 'Poppins', body: 'Inter' },
+                { heading: 'Raleway', body: 'Lato' }
+            ];
+            
+            const pair = fontPairs[Math.floor(Math.random() * fontPairs.length)];
+            const typoDiv = document.getElementById('generatedTypography');
+            typoDiv.innerHTML = `
+                <div style="font-family:'${pair.heading}',serif;font-size:2rem;margin-bottom:12px;">כותרת ראשית</div>
+                <div style="font-family:'${pair.body}',sans-serif;font-size:1rem;line-height:1.6;">
+                    זהו טקסט לדוגמה שמדגים את השילוב הטיפוגרפי. הפונט ${pair.body} משתלב היטב עם ${pair.heading}.
+                </div>
+                <div style="margin-top:12px;font-size:0.9rem;color:var(--text-muted);">
+                    Heading: ${pair.heading} | Body: ${pair.body}
+                </div>
+            `;
+        }
+        
+        function previewGrid() {
+            const columns = document.getElementById('gridColumns').value;
+            const gap = document.getElementById('gridGap').value;
+            const previewDiv = document.getElementById('gridPreview');
+            
+            let gridHtml = `<div style="display:grid;grid-template-columns:repeat(${columns},1fr);gap:${gap}px;">`;
+            for (let i = 0; i < columns; i++) {
+                gridHtml += `<div style="background:var(--primary);height:40px;border-radius:4px;"></div>`;
+            }
+            gridHtml += '</div>';
+            
+            previewDiv.innerHTML = gridHtml;
+        }
+        
+        function previewDevice(device) {
+            const previewDiv = document.getElementById('devicePreview');
+            const widths = {
+                'mobile': '375px',
+                'tablet': '768px',
+                'desktop': '100%'
+            };
+            
+            previewDiv.style.maxWidth = widths[device];
+            previewDiv.style.margin = device !== 'desktop' ? '0 auto' : '0';
+            previewDiv.innerHTML = `<div style="text-align:center;padding:40px;"><h3>תצוגת ${device}</h3><p>רוחב: ${widths[device]}</p></div>`;
+        }
     </script>
 </body>
 </html>
