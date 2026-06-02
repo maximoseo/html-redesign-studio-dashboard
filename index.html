@@ -7,10 +7,41 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Login Overlay -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-modal">
+            <div class="auth-logo">🎨</div>
+            <h2>HTML Redesign Studio</h2>
+            <p class="auth-subtitle">התחבר למערכת שיפור תבניות HTML</p>
+            
+            <div id="loginForm">
+                <input type="password" id="authPassword" placeholder="סיסמה" class="auth-input">
+                <button id="authSubmit" class="auth-btn">התחבר</button>
+                <p id="authError" class="auth-error">סיסמה שגויה</p>
+                <a href="#" id="forgotPassword" class="forgot-link">שכחת סיסמה?</a>
+            </div>
+            
+            <div id="resetForm" style="display:none;">
+                <p class="reset-info">הזן את כתובת המייל שלך לקבלת קוד איפוס:</p>
+                <input type="email" id="resetEmail" placeholder="service@maximo-seo.com" class="auth-input">
+                <button id="resetSubmit" class="auth-btn">שלח קוד איפוס</button>
+                <button id="backToLogin" class="auth-btn-secondary">חזור להתחברות</button>
+                <p id="resetSuccess" class="auth-success">קוד איפוס נשלח למייל!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
     <div class="container">
         <header>
-            <h1>🎨 HTML Redesign Studio</h1>
-            <p class="subtitle">שיפור משמעותי של דפי HTML שנוצרו באוטומציה</p>
+            <div class="header-left">
+                <h1>🎨 HTML Redesign Studio</h1>
+                <p class="subtitle">שיפור משמעותי של דפי HTML שנוצרו באוטומציה</p>
+            </div>
+            <div class="header-right">
+                <span id="userInfo">מחובר</span>
+                <button id="logoutBtn" class="logout-btn" title="התנתק">🚪</button>
+            </div>
         </header>
 
         <div class="stats-grid">
