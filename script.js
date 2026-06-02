@@ -1,117 +1,160 @@
-// Sample data - replace with actual API calls
-const sampleTemplates = [
-    {
-        id: 1,
-        name: 'Landing Page - שירותי SEO',
-        status: 'approved',
-        improvement: '+45%',
-        date: '2026-06-02 13:00:00'
-    },
-    {
-        id: 2,
-        name: 'דף אודות - MaximoSEO',
-        status: 'in-progress',
-        improvement: '+32%',
-        date: '2026-06-02 12:45:00'
-    },
-    {
-        id: 3,
-        name: 'בלוג - מאמר SEO',
-        status: 'redesigned',
-        improvement: '+58%',
-        date: '2026-06-02 12:30:00'
-    },
-    {
-        id: 4,
-        name: 'Contact Page',
-        status: 'pending',
-        improvement: '0%',
-        date: '2026-06-02 12:15:00'
+// Authentication
+const AUTH_KEY='***';
+const AUTH_PASS='***';
+const RESET_EMAIL = 'service@maximo-seo.com';
+
+function isAuthenticated() {
+    return sessionStorage.getItem(AUTH_KEY) === 'true';
+}
+
+function authenticate(password) {
+    if (password === AUTH_PASS) {
+        sessionStorage.setItem(AUTH_KEY, 'true');
+        return true;
     }
-];
+    return false;
+}
 
-// Initialize dashboard
-function initDashboard() {
+function logout() {
+    sessionStorage.removeItem(AUTH_KEY);
+    location.reload();
+}
+
+// Auth UI
+document.addEventListener('DOMContentLoaded', function() {
+    const authOverlay = document.getElementById('authOverlay');
+    const container = document.querySelector('.container');
+    const loginForm = document.getElementById('loginForm');
+    const resetForm = document.getElementById('resetForm');
+    const authPassword = document.getElementById('authPassword');
+    const authSubmit = document.getElementById('authSubmit');
+    const authError = document.getElementById('authError');
+    const forgotPassword = document.getElementById('forgotPassword');
+    const resetSubmit = document.getElementById('resetSubmit');
+    const resetEmail = document.getElementById('resetEmail');
+    const resetSuccess = document.getElementById('resetSuccess');
+    const backToLogin = document.getElementById('backToLogin');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Check if already authenticated
+    if (isAuthenticated()) {
+        authOverlay.style.display = 'none';
+        container.classList.add('visible');
+        loadDashboard();
+    }
+
+    // Login handler
+    function handleLogin() {
+        const password = authPassword.value;
+        if (authenticate(password)) {
+            authOverlay.style.display = 'none';
+            container.classList.add('visible');
+            loadDashboard();
+        } else {
+            authError.style.display = 'block';
+            setTimeout(() => authError.style.display = 'none', 3000);
+        }
+    }
+
+    authSubmit.addEventListener('click', handleLogin);
+    authPassword.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleLogin();
+    });
+
+    // Forgot password handler
+    forgotPassword.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        resetForm.style.display = 'block';
+    });
+
+    // Reset password handler
+    resetSubmit.addEventListener('click', () => {
+        const email = resetEmail.value;
+        if (email === RESET_EMAIL) {
+            // Simulate sending reset code
+            resetSuccess.style.display = 'block';
+            setTimeout(() => {
+                resetSuccess.style.display = 'none';
+                resetForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            }, 3000);
+        } else {
+            alert('כתובת מייל לא נכונה');
+        }
+    });
+
+    // Back to login
+    backToLogin.addEventListener('click', () => {
+        resetForm.style.display = 'none';
+        loginForm.style.display = 'block';
+    });
+
+    // Logout handler
+    logoutBtn.addEventListener('click', logout);
+});
+
+// Dashboard Functions
+function loadDashboard() {
+    loadTemplates();
     updateStats();
-    renderTemplatesTable();
 }
 
-// Update statistics
-function updateStats() {
-    const stats = {
-        total: sampleTemplates.length,
-        redesigned: sampleTemplates.filter(t => t.status === 'redesigned' || t.status === 'approved').length,
-        inProgress: sampleTemplates.filter(t => t.status === 'in-progress').length,
-        approved: sampleTemplates.filter(t => t.status === 'approved').length
-    };
-    
-    document.getElementById('total-templates').textContent = stats.total;
-    document.getElementById('redesigned').textContent = stats.redesigned;
-    document.getElementById('in-progress').textContent = stats.inProgress;
-    document.getElementById('approved').textContent = stats.approved;
-}
+function loadTemplates() {
+    const sampleTemplates = [
+        { name: 'Landing Page - שירותי SEO', status: 'approved', improvement: '+45%', date: '2026-06-02 13:00:00' },
+        { name: 'דף אודות - MaximoSEO', status: 'in-progress', improvement: '+32%', date: '2026-06-02 12:45:00' },
+        { name: 'בלוג - מאמר SEO', status: 'redesigned', improvement: '+58%', date: '2026-06-02 12:30:00' },
+        { name: 'Contact Page', status: 'pending', improvement: '0%', date: '2026-06-02 12:15:00' }
+    ];
 
-// Render templates table
-function renderTemplatesTable() {
     const tbody = document.getElementById('templates-tbody');
-    tbody.innerHTML = sampleTemplates.map(template => `
-        <tr>
+    tbody.innerHTML = '';
+
+    sampleTemplates.forEach(template => {
+        const row = document.createElement('tr');
+        const statusClass = `status-${template.status}`;
+        const statusText = template.status === 'approved' ? 'אושר' : 
+                          template.status === 'in-progress' ? 'בתהליך' : 
+                          template.status === 'redesigned' ? 'עוצב מחדש' : 'ממתין';
+        
+        row.innerHTML = `
             <td>${template.name}</td>
-            <td><span class="status-badge status-${template.status}">${getStatusText(template.status)}</span></td>
-            <td><strong style="color: #28a745;">${template.improvement}</strong></td>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            <td style="color: #51cf66; font-weight: 600;">${template.improvement}</td>
             <td>${template.date}</td>
             <td>
-                <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9em;" onclick="viewTemplate(${template.id})">
-                    👁️ צפה
-                </button>
-                <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9em;" onclick="compareTemplate(${template.id})">
-                    🔄 השווה
-                </button>
+                <button class="btn btn-secondary" onclick="viewTemplate('${template.name}')" style="padding: 8px 16px; font-size: 0.9em; margin-left: 5px;">👁️ צפה</button>
+                <button class="btn btn-secondary" onclick="compareTemplate('${template.name}')" style="padding: 8px 16px; font-size: 0.9em;">🔄 השווה</button>
             </td>
-        </tr>
-    `).join('');
+        `;
+        tbody.appendChild(row);
+    });
 }
 
-// Helper functions
-function getStatusText(status) {
-    const statusMap = {
-        'approved': 'אושר',
-        'in-progress': 'בתהליך',
-        'redesigned': 'עוצב מחדש',
-        'pending': 'ממתין'
-    };
-    return statusMap[status] || status;
-}
-
-function viewTemplate(id) {
-    const template = sampleTemplates.find(t => t.id === id);
-    if (template) {
-        alert(`👁️ צופה בתבנית: ${template.name}\n\nסטטוס: ${getStatusText(template.status)}\nשיפור: ${template.improvement}`);
-    }
-}
-
-function compareTemplate(id) {
-    const template = sampleTemplates.find(t => t.id === id);
-    if (template) {
-        alert(`🔄 משווה גרסאות עבור: ${template.name}\n\nמציג לפני/אחרי...`);
-    }
+function updateStats() {
+    document.getElementById('total-templates').textContent = '4';
+    document.getElementById('redesigned').textContent = '1';
+    document.getElementById('in-progress').textContent = '1';
+    document.getElementById('approved').textContent = '1';
 }
 
 function processQueue() {
-    const pendingCount = sampleTemplates.filter(t => t.status === 'pending').length;
-    alert(`🎨 מעבד תור עיצוב...\n\n${pendingCount} תבניות ממתינות לעיצוב מחדש.\nפעולה זו תיקח כמה דקות.`);
-    // Add actual processing logic here
+    alert('🎨 מעבד תור עיצוב...');
 }
 
 function runOptimization() {
-    alert('⚡ מריץ אופטימיזציה...\n\nמשפר ביצועים, SEO ונגישות עבור כל התבניות המעוצבות.');
-    // Add actual optimization logic here
+    alert('⚡ מריץ אופטימיזציה...');
 }
 
 function exportTemplates() {
-    alert('📦 מייצא תבניות...\n\nמייצא את כל התבניות המאושרות בחזרה ל-n8n.');
-    // Add actual export logic here
+    alert('📦 מייצא תבניות...');
 }
 
-// Initialize on load
-document.addEventListener('DOMContentLoaded', initDashboard);
+function viewTemplate(name) {
+    alert(`👁️ צופה בתבנית: ${name}`);
+}
+
+function compareTemplate(name) {
+    alert(`🔄 משווה תבנית: ${name}`);
+}
