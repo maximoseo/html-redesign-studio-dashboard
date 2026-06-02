@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Redesign Studio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Overlay -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-modal">
+            <div class="auth-logo">🎨</div>
+            <h2>HTML Redesign Studio</h2>
+            <p class="auth-subtitle">שיפור עיצוב אוטומטי ל-N8N Workflows</p>
+            
+            <div id="loginForm">
+                <input type="password" id="authPassword" placeholder="סיסמה" class="auth-input">
+                <button id="authSubmit" class="auth-btn">התחבר</button>
+                <p id="authError" class="auth-error">סיסמה שגויה</p>
+                <a href="#" id="forgotPassword" class="forgot-link">שכחת סיסמה?</a>
+            </div>
+            
+            <div id="resetForm" style="display:none;">
+                <p class="reset-info">הזן את כתובת המייל שלך לקבלת קוד איפוס:</p>
+                <input type="email" id="resetEmail" placeholder="service@maximo-seo.com" class="auth-input">
+                <button id="resetSubmit" class="auth-btn">שלח קוד איפוס</button>
+                <button id="backToLogin" class="auth-btn-secondary">חזור להתחברות</button>
+                <p id="resetSuccess" class="auth-success">קוד איפוס נשלח למייל!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>🎨 HTML Redesign Studio</h1>
+                <p class="subtitle">שיפור עיצוב אוטומטי ל-N8N Workflows</p>
+            </div>
+            <div class="header-right">
+                <button id="refreshBtn" class="btn btn-secondary">🔄 רענן</button>
+                <button id="logoutBtn" class="logout-btn" title="התנתק">🚪</button>
+            </div>
+        </header>
+
+        <!-- Workflow Selection -->
+        <div class="section">
+            <h2>📋 בחר Workflow לעיצוב</h2>
+            <div class="workflow-selector">
+                <select id="workflowSelect" class="auth-input">
+                    <option value="">-- בחר Workflow --</option>
+                </select>
+                <button id="loadWorkflowBtn" class="btn btn-primary">🔍 טען Workflow</button>
+            </div>
+        </div>
+
+        <!-- Workflow Details -->
+        <div id="workflowDetails" style="display:none;">
+            <div class="section">
+                <h2>🎯 פרטי Workflow</h2>
+                <div id="workflowInfo" class="info-box"></div>
+            </div>
+
+            <!-- Design Nodes -->
+            <div class="section">
+                <h2>🎨 Nodes עם עיצוב (HTML/CSS)</h2>
+                <div id="designNodesList" class="nodes-list"></div>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="section" id="editorSection" style="display:none;">
+                <h2>✏️ עורך קוד</h2>
+                <div class="editor-tabs">
+                    <button class="tab-btn active" data-tab="original">עיצוב מקורי</button>
+                    <button class="tab-btn" data-tab="improved">עיצוב משופר</button>
+                </div>
+                <div class="editor-container">
+                    <textarea id="originalCode" class="code-editor" readonly></textarea>
+                    <textarea id="improvedCode" class="code-editor" style="display:none;"></textarea>
+                </div>
+                <div class="editor-actions">
+                    <button id="generateImprovedBtn" class="btn btn-primary">✨ צור עיצוב משופר</button>
+                    <button id="approveBtn" class="btn btn-success" style="display:none;">✅ אשר ועדכן N8N</button>
+                </div>
+            </div>
+
+            <!-- Preview -->
+            <div class="section" id="previewSection" style="display:none;">
+                <h2>👁️ תצוגה מקדימה</h2>
+                <div class="preview-tabs">
+                    <button class="tab-btn active" data-preview="original">מקורי</button>
+                    <button class="tab-btn" data-preview="improved">משופר</button>
+                </div>
+                <div class="preview-container">
+                    <iframe id="originalPreview" class="preview-frame"></iframe>
+                    <iframe id="improvedPreview" class="preview-frame" style="display:none;"></iframe>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div id="statusMessage" class="status-message" style="display:none;"></div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loadingOverlay" class="loading-overlay" style="display:none;">
+            <div class="spinner"></div>
+            <p>טוען...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
