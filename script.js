@@ -515,3 +515,565 @@ document.addEventListener('keydown', (e) => {
         closePreview();
     }
 });
+
+// GBP Analyzer
+async function analyzeGBP() {
+    const businessName = document.getElementById('gbpBusinessName').value.trim();
+    const location = document.getElementById('gbpLocation').value.trim();
+    
+    if (!businessName || !location) {
+        alert('אנא הכנס שם עסק ומיקום');
+        return;
+    }
+    
+    const resultsDiv = document.getElementById('gbpResults');
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p>🔍 מנתח פרופיל עסקי...</p>';
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Simulated GBP data
+    const gbpData = {
+        score: 78,
+        reviews: 47,
+        rating: 4.6,
+        photos: 23,
+        issues: [
+            {
+                title: 'תיאור עסק חסר',
+                description: 'התיאור של העסק קצר מדי (פחות מ-250 תווים). מומלץ להרחיב עם מילות מפתח רלוונטיות.'
+            },
+            {
+                title: 'שעות פעילות לא מעודכנות',
+                description: 'שעות הפעילות לא תואמות למידע באתר. יש לסנכרן בין כל הפלטפורמות.'
+            },
+            {
+                title: 'מיעוט תמונות',
+                description: 'יש רק 23 תמונות. מומלץ להעלות לפחות 50 תמונות איכותיות של העסק, הצוות, והשירותים.'
+            }
+        ],
+        recommendations: [
+            {
+                title: 'הוסף פוסטים שבועיים',
+                description: 'פרסם פוסט חדש כל שבוע עם עדכונים, מבצעים, או טיפים. זה משפר את הנראות ב-Google Maps.'
+            },
+            {
+                title: 'הגב לביקורות',
+                description: 'הגב לכל הביקורות (חיוביות ושליליות) תוך 24 שעות. זה משפר את הדירוג ואמון הלקוחות.'
+            },
+            {
+                title: 'הוסף שירותים ומוצרים',
+                description: 'הגדר את כל השירותים והמוצרים עם תיאורים מפורטים ומחירים. זה עוזר ב-SEO מקומי.'
+            }
+        ],
+        seoTips: [
+            {
+                title: 'מילות מפתח מקומיות',
+                description: 'הוסף מילות מפתח כמו "שירותי SEO בתל אביב" בתיאור העסק ובפוסטים.'
+            },
+            {
+                title: 'קישורים לאתר',
+                description: 'ודא שהקישור לאתר פעיל ותקין. הוסף קישורים ספציפיים לדפי שירותים.'
+            },
+            {
+                title: 'קטגוריות משניות',
+                description: 'הוסף קטגוריות משניות רלוונטיות (למשל: "סוכנות שיווק דיגיטלי", "ייעוץ עסקי").'
+            }
+        ]
+    };
+    
+    // Render results
+    document.getElementById('gbpScore').textContent = gbpData.score;
+    document.getElementById('gbpReviews').textContent = gbpData.reviews;
+    document.getElementById('gbpRating').textContent = gbpData.rating;
+    document.getElementById('gbpPhotos').textContent = gbpData.photos;
+    
+    document.getElementById('gbpIssuesList').innerHTML = gbpData.issues.map(issue => `
+        <div class="issue-item">
+            <strong>⚠️ ${issue.title}</strong>
+            <p>${issue.description}</p>
+        </div>
+    `).join('');
+    
+    document.getElementById('gbpRecommendationsList').innerHTML = gbpData.recommendations.map(rec => `
+        <div class="recommendation-item">
+            <strong>💡 ${rec.title}</strong>
+            <p>${rec.description}</p>
+        </div>
+    `).join('');
+    
+    document.getElementById('gbpSEOTips').innerHTML = gbpData.seoTips.map(tip => `
+        <div class="seo-tip-item">
+            <strong>🎯 ${tip.title}</strong>
+            <p>${tip.description}</p>
+        </div>
+    `).join('');
+    
+    alert(`✓ ניתוח הושלם!\nציון כללי: ${gbpData.score}/100\nביקורות: ${gbpData.reviews}\nדירוג: ${gbpData.rating}/5`);
+}
+
+// AI Design Assistant
+let aiChatHistory = [];
+
+function sendAIMessage() {
+    const input = document.getElementById('aiChatInput');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Add user message
+    const chatHistory = document.getElementById('aiChatHistory');
+    const userMsg = document.createElement('div');
+    userMsg.className = 'ai-message user-message';
+    userMsg.innerHTML = `<strong>👤 אתה:</strong> ${message}`;
+    chatHistory.appendChild(userMsg);
+    
+    // Clear input
+    input.value = '';
+    
+    // Simulate AI response
+    setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'ai-message';
+        
+        let response = '';
+        if (message.includes('צבע') || message.includes('פלט')) {
+            response = 'הנה פלטה מומלצת: כחול כהה (#1e3a8a) כצבע ראשי, תכלת (#3b82f6) כצבע משני, וצהוב (#fbbf24) כצבע דגש. זה שילוב מקצועי ומודרני.';
+        } else if (message.includes('פונט') || message.includes('טיפוגרפיה')) {
+            response = 'שילוב מומלץ: Inter לכותרות (משקל 700) ו-Open Sans לגוף הטקסט (משקל 400). זה קריא, נקי, ומתאים לאתרים עסקיים.';
+        } else if (message.includes('מבנה') || message.includes('layout')) {
+            response = 'מבנה מומלץ: Hero section עם CTA ברור, 3 כרטיסי שירותים, testimonial slider, ו-footer עם פרטי קשר. השתמש ב-grid של 12 עמודות.';
+        } else {
+            response = 'אני יכול לעזור לך עם: פלטות צבעים, שילובי פונטים, מבני דפים, ושיפור עיצובים קיימים. מה תרצה לעשות?';
+        }
+        
+        aiMsg.innerHTML = `<strong>🤖 AI:</strong> ${response}`;
+        chatHistory.appendChild(aiMsg);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    }, 800);
+}
+
+function aiSuggest(type) {
+    const suggestions = {
+        colors: '🎨 פלטה מומלצת:\n• ראשי: #8b5cf6 (סגול)\n• משני: #ec4899 (ורוד)\n• דגש: #06b6d4 (תכלת)\n• רקע: #f8fafc\n• טקסט: #1e293b',
+        fonts: '🔤 שילוב פונטים:\n• כותרות: Poppins (700)\n• גוף: Inter (400)\n• גודל כותרת: 2.5rem\n• גודל גוף: 1rem\n• מרווח שורות: 1.6',
+        layout: '📐 מבנה מומלץ:\n• Hero: 100vh עם gradient\n• Features: 3 עמודות\n• About: 2 עמודות\n• CTA: מרכזי\n• Footer: 4 עמודות',
+        improve: '✨ שיפורים מומלצים:\n• הוסף hover effects\n• השתמש ב-box-shadow עדין\n• הוסף animations קלות\n• שפר נגישות (WCAG 2.1)\n• אופטימיזציה למובייל'
+    };
+    
+    const chatHistory = document.getElementById('aiChatHistory');
+    const aiMsg = document.createElement('div');
+    aiMsg.className = 'ai-message';
+    aiMsg.innerHTML = `<strong>🤖 AI:</strong> ${suggestions[type]}`;
+    chatHistory.appendChild(aiMsg);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+// Design System Exporter
+function exportDesignSystem() {
+    const format = document.getElementById('exportFormat').value;
+    const previewDiv = document.getElementById('exportPreview');
+    const codeEl = document.getElementById('exportCode');
+    
+    let code = '';
+    
+    if (format === 'css') {
+        code = `:root {
+  /* Colors */
+  --color-primary: #8b5cf6;
+  --color-secondary: #ec4899;
+  --color-accent: #06b6d4;
+  --color-bg: #f8fafc;
+  --color-text: #1e293b;
+  
+  /* Typography */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-size-h1: 2.5rem;
+  --font-size-body: 1rem;
+  --line-height: 1.6;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+}`;
+    } else if (format === 'tailwind') {
+        code = `// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#8b5cf6',
+        secondary: '#ec4899',
+        accent: '#06b6d4',
+      },
+      fontFamily: {
+        heading: ['Poppins', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+      },
+      fontSize: {
+        'h1': '2.5rem',
+        'body': '1rem',
+      },
+      spacing: {
+        'xs': '4px',
+        'sm': '8px',
+        'md': '16px',
+        'lg': '24px',
+        'xl': '32px',
+      },
+      borderRadius: {
+        'sm': '4px',
+        'md': '8px',
+        'lg': '16px',
+      },
+      boxShadow: {
+        'sm': '0 1px 2px rgba(0, 0, 0, 0.05)',
+        'md': '0 4px 6px rgba(0, 0, 0, 0.1)',
+        'lg': '0 10px 15px rgba(0, 0, 0, 0.15)',
+      },
+    },
+  },
+}`;
+    } else if (format === 'scss') {
+        code = `// Variables
+$color-primary: #8b5cf6;
+$color-secondary: #ec4899;
+$color-accent: #06b6d4;
+$color-bg: #f8fafc;
+$color-text: #1e293b;
+
+$font-heading: 'Poppins', sans-serif;
+$font-body: 'Inter', sans-serif;
+$font-size-h1: 2.5rem;
+$font-size-body: 1rem;
+$line-height: 1.6;
+
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 16px;
+
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+
+// Mixins
+@mixin heading {
+  font-family: $font-heading;
+  font-size: $font-size-h1;
+  line-height: $line-height;
+}
+
+@mixin body-text {
+  font-family: $font-body;
+  font-size: $font-size-body;
+  line-height: $line-height;
+}`;
+    } else if (format === 'json') {
+        code = `{
+  "colors": {
+    "primary": "#8b5cf6",
+    "secondary": "#ec4899",
+    "accent": "#06b6d4",
+    "background": "#f8fafc",
+    "text": "#1e293b"
+  },
+  "typography": {
+    "heading": {
+      "family": "Poppins",
+      "weight": 700,
+      "size": "2.5rem"
+    },
+    "body": {
+      "family": "Inter",
+      "weight": 400,
+      "size": "1rem",
+      "lineHeight": 1.6
+    }
+  },
+  "spacing": {
+    "xs": "4px",
+    "sm": "8px",
+    "md": "16px",
+    "lg": "24px",
+    "xl": "32px"
+  },
+  "borderRadius": {
+    "sm": "4px",
+    "md": "8px",
+    "lg": "16px"
+  },
+  "shadows": {
+    "sm": "0 1px 2px rgba(0, 0, 0, 0.05)",
+    "md": "0 4px 6px rgba(0, 0, 0, 0.1)",
+    "lg": "0 10px 15px rgba(0, 0, 0, 0.15)"
+  }
+}`;
+    }
+    
+    codeEl.textContent = code;
+    previewDiv.style.display = 'block';
+}
+
+function copyExportCode() {
+    const code = document.getElementById('exportCode').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        alert('✓ הקוד הועתק ללוח!');
+    }).catch(err => {
+        alert('שגיאה בהעתקה: ' + err);
+    });
+}
+
+// Design Skills Directory
+async function loadSkills(source) {
+    const resultsDiv = document.getElementById('skillsResults');
+    const skillsListDiv = document.getElementById('skillsList');
+    
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<h3>טוען סקילים...</h3>';
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const skills = {
+        dribbble: [
+            { name: 'Glassmorphism UI', category: 'Modern' },
+            { name: 'Neumorphism Design', category: 'Trend' },
+            { name: 'Gradient Overlays', category: 'Color' },
+            { name: 'Micro-interactions', category: 'Animation' }
+        ],
+        behance: [
+            { name: 'Brand Identity System', category: 'Branding' },
+            { name: 'Typography Hierarchy', category: 'Type' },
+            { name: 'Color Theory Application', category: 'Color' },
+            { name: 'Layout Composition', category: 'Layout' }
+        ],
+        awwwards: [
+            { name: 'Scroll-triggered Animations', category: 'Animation' },
+            { name: 'Parallax Effects', category: 'Interactive' },
+            { name: 'Creative Navigation', category: 'UX' },
+            { name: 'Immersive Storytelling', category: 'Content' }
+        ],
+        siteinspire: [
+            { name: 'Minimalist Grid', category: 'Layout' },
+            { name: 'Bold Typography', category: 'Type' },
+            { name: 'Monochrome Palette', category: 'Color' },
+            { name: 'Clean Navigation', category: 'UX' }
+        ]
+    };
+    
+    const sourceSkills = skills[source] || [];
+    
+    skillsListDiv.innerHTML = sourceSkills.map(skill => `
+        <div class="skill-item">
+            <strong>${skill.name}</strong>
+            <span>${skill.category}</span>
+        </div>
+    `).join('');
+    
+    resultsDiv.innerHTML = `<h3>סקילים שנטענו מ-${source}:</h3>`;
+    resultsDiv.appendChild(skillsListDiv);
+}
+
+// Element Library
+function initElementLibrary() {
+    const categories = document.querySelectorAll('.element-cat');
+    const elementsGrid = document.getElementById('elementsGrid');
+    
+    const elements = {
+        headers: [
+            { name: 'Navigation Bar', preview: '🧭', description: 'Header עם תפריט ניווט' },
+            { name: 'Hero Header', preview: '🎯', description: 'Header עם CTA בולט' },
+            { name: 'Sticky Header', preview: '📌', description: 'Header שנשאר למעלה' }
+        ],
+        heroes: [
+            { name: 'Full-screen Hero', preview: '🖼️', description: 'Hero בגודל מלא' },
+            { name: 'Split Hero', preview: '↔️', description: 'Hero עם 2 עמודות' },
+            { name: 'Video Hero', preview: '🎬', description: 'Hero עם וידאו רקע' }
+        ],
+        cards: [
+            { name: 'Product Card', preview: '🛍️', description: 'כרטיס מוצר' },
+            { name: 'Service Card', preview: '⚙️', description: 'כרטיס שירות' },
+            { name: 'Team Card', preview: '👥', description: 'כרטיס חבר צוות' }
+        ],
+        buttons: [
+            { name: 'Primary Button', preview: '🔘', description: 'כפתור ראשי' },
+            { name: 'Outline Button', preview: '⭕', description: 'כפתור עם גבול' },
+            { name: 'Icon Button', preview: '🎯', description: 'כפתור עם אייקון' }
+        ],
+        forms: [
+            { name: 'Contact Form', preview: '📧', description: 'טופס יצירת קשר' },
+            { name: 'Login Form', preview: '🔐', description: 'טופס התחברות' },
+            { name: 'Search Form', preview: '🔍', description: 'טופס חיפוש' }
+        ],
+        footers: [
+            { name: 'Simple Footer', preview: '📄', description: 'Footer פשוט' },
+            { name: 'Multi-column Footer', preview: '📊', description: 'Footer עם עמודות' },
+            { name: 'Social Footer', preview: '📱', description: 'Footer עם רשתות חברתיות' }
+        ]
+    };
+    
+    function renderElements(category) {
+        let items = [];
+        if (category === 'all') {
+            Object.values(elements).forEach(arr => items = items.concat(arr));
+        } else {
+            items = elements[category] || [];
+        }
+        
+        elementsGrid.innerHTML = items.map(el => `
+            <div class="element-card">
+                <div class="element-preview">
+                    <span style="font-size: 4rem;">${el.preview}</span>
+                </div>
+                <div class="element-info">
+                    <h4>${el.name}</h4>
+                    <p>${el.description}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    categories.forEach(cat => {
+        cat.addEventListener('click', () => {
+            categories.forEach(c => c.classList.remove('active'));
+            cat.classList.add('active');
+            renderElements(cat.dataset.cat);
+        });
+    });
+    
+    // Render all by default
+    renderElements('all');
+}
+
+// Design Inspiration Feed
+function refreshInspiration() {
+    const feed = document.getElementById('inspirationFeed');
+    feed.innerHTML = '<p>טוען השראות...</p>';
+    
+    setTimeout(() => {
+        const inspirations = [
+            { title: 'Modern Dashboard', category: 'modern', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400' },
+            { title: 'Minimalist Portfolio', category: 'minimal', image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400' },
+            { title: 'Creative Agency', category: 'creative', image: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?w=400' },
+            { title: 'Corporate Website', category: 'corporate', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400' },
+            { title: 'E-commerce Store', category: 'modern', image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=400' },
+            { title: 'SaaS Landing Page', category: 'minimal', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400' }
+        ];
+        
+        feed.innerHTML = inspirations.map(insp => `
+            <div class="inspiration-card" data-category="${insp.category}">
+                <img src="${insp.image}" alt="${insp.title}" class="inspiration-image">
+                <div class="inspiration-info">
+                    <h4>${insp.title}</h4>
+                    <p>${getCategoryName(insp.category)}</p>
+                </div>
+            </div>
+        `).join('');
+    }, 1000);
+}
+
+function filterInspiration() {
+    const category = document.getElementById('inspirationCategory').value;
+    const cards = document.querySelectorAll('.inspiration-card');
+    
+    cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// Advanced Design Tools
+function generatePalette() {
+    const palette = document.getElementById('generatedPalette');
+    const colors = [
+        '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0'),
+        '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0'),
+        '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0'),
+        '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0'),
+        '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')
+    ];
+    
+    palette.innerHTML = colors.map(c => `
+        <div class="color-swatch" style="background:${c}" title="${c}"></div>
+    `).join('');
+}
+
+function generateTypography() {
+    const typography = document.getElementById('generatedTypography');
+    const fonts = [
+        { heading: 'Poppins', body: 'Inter' },
+        { heading: 'Playfair Display', body: 'Lato' },
+        { heading: 'Montserrat', body: 'Open Sans' },
+        { heading: 'Raleway', body: 'Nunito' }
+    ];
+    
+    const selected = fonts[Math.floor(Math.random() * fonts.length)];
+    
+    typography.innerHTML = `
+        <div style="font-family: '${selected.heading}', sans-serif; font-size: 2rem; margin-bottom: 12px;">
+            כותרת עם ${selected.heading}
+        </div>
+        <div style="font-family: '${selected.body}', sans-serif; font-size: 1rem; line-height: 1.6;">
+            טקסט גוף עם ${selected.body}. זהו טקסט דוגמה שמראה איך הפונט נראה בפועל.
+        </div>
+    `;
+}
+
+function previewGrid() {
+    const columns = document.getElementById('gridColumns').value;
+    const gap = document.getElementById('gridGap').value;
+    const preview = document.getElementById('gridPreview');
+    
+    preview.style.display = 'grid';
+    preview.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+    preview.style.gap = `${gap}px`;
+    
+    preview.innerHTML = Array.from({ length: parseInt(columns) }, (_, i) => `
+        <div style="background: var(--accent); padding: 20px; text-align: center; border-radius: var(--radius-sm);">
+            ${i + 1}
+        </div>
+    `).join('');
+}
+
+function previewDevice(device) {
+    const preview = document.getElementById('devicePreview');
+    const widths = {
+        mobile: '375px',
+        tablet: '768px',
+        desktop: '1440px'
+    };
+    
+    preview.style.width = widths[device];
+    preview.style.margin = '0 auto';
+    preview.innerHTML = `<div style="padding: 20px; text-align: center;">תצוגת ${device}</div>`;
+}
+
+// Initialize new sections on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    initElementLibrary();
+    refreshInspiration();
+});
