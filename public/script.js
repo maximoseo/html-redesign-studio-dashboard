@@ -7,12 +7,15 @@ let currentWorkflow = null;
 let currentDesignNode = null;
 
 function isAuthenticated() {
-    return sessionStorage.getItem(AUTH_KEY) === 'true';
+    return sessionStorage.getItem(AUTH_KEY) === 'true' || localStorage.getItem(AUTH_KEY) === 'true';
 }
 
-function authenticate(password) {
+function authenticate(password, remember = false) {
     if (password === AUTH_PASS) {
         sessionStorage.setItem(AUTH_KEY, 'true');
+        if (remember) {
+            localStorage.setItem(AUTH_KEY, 'true');
+        }
         return true;
     }
     return false;
@@ -20,6 +23,7 @@ function authenticate(password) {
 
 function logout() {
     sessionStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem(AUTH_KEY);
     location.reload();
 }
 
@@ -50,7 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Login handler
     function handleLogin() {
         const password = authPassword.value;
-        if (authenticate(password)) {
+        const remember = document.getElementById('rememberMe').checked;
+        if (authenticate(password, remember)) {
             authOverlay.style.display = 'none';
             container.classList.add('visible');
             loadWorkflows();
@@ -83,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 loginForm.style.display = 'block';
             }, 3000);
         } else {
-            alert('כתובת מייל לא נכונה');
+            alert('Invalid email address');
         }
     });
 
@@ -130,19 +135,19 @@ async function loadWorkflows() {
         const select = document.getElementById('workflowSelect');
         
         // Clear existing options
-        select.innerHTML = '<option value="">-- בחר Workflow --</option>';
+        select.innerHTML = '<option value="">-- Select Workflow --</option>';
         
         // Add workflows
         (data.data || []).forEach(wf => {
             const option = document.createElement('option');
             option.value = wf.id;
-            option.textContent = `${wf.name} (${wf.active ? 'פעיל' : 'לא פעיל'})`;
+            option.textContent = `${wf.name} (${wf.active ? 'Active' : 'Inactive'})`;
             select.appendChild(option);
         });
         
         showLoading(false);
     } catch (error) {
-        showStatus(`שגיאה בטעינת workflows: ${error.message}`, 'error');
+        showStatus(`Error loading workflows: ${error.message}`, 'error');
         showLoading(false);
     }
 }
@@ -153,7 +158,7 @@ async function loadSelectedWorkflow() {
     const workflowId = select.value;
     
     if (!workflowId) {
-        alert('אנא בחר workflow');
+        alert('Please select a workflow');
         return;
     }
     
@@ -171,7 +176,7 @@ async function loadSelectedWorkflow() {
         document.getElementById('workflowDetails').style.display = 'block';
         showLoading(false);
     } catch (error) {
-        showStatus(`שגיאה בטעינת workflow: ${error.message}`, 'error');
+        showStatus(`Error loading workflow: ${error.message}`, 'error');
         showLoading(false);
     }
 }
@@ -182,10 +187,10 @@ function displayWorkflowInfo(workflow) {
     infoBox.innerHTML = `
         <h3>${workflow.name}</h3>
         <p><strong>ID:</strong> ${workflow.id}</p>
-        <p><strong>סטטוס:</strong> ${workflow.active ? '✅ פעיל' : '⏸️ לא פעיל'}</p>
-        <p><strong>נוצר:</strong> ${new Date(workflow.createdAt).toLocaleString('he-IL')}</p>
-        <p><strong>עודכן:</strong> ${new Date(workflow.updatedAt).toLocaleString('he-IL')}</p>
-        <p><strong>סה"כ nodes:</strong> ${(workflow.nodes || []).length}</p>
+        <p><strong>Status:</strong> ${workflow.active ? '✅ Active' : '⏸️ Inactive'}</p>
+        <p><strong>Created:</strong> ${new Date(workflow.createdAt).toLocaleString('en-US')}</p>
+        <p><strong>Updated:</strong> ${new Date(workflow.updatedAt).toLocaleString('en-US')}</p>
+        <p><strong>Total nodes:</strong> ${(workflow.nodes || []).length}</p>
     `;
 }
 
@@ -195,7 +200,7 @@ function displayDesignNodes(nodes) {
     list.innerHTML = '';
     
     if (nodes.length === 0) {
-        list.innerHTML = '<p style="color: #a0a0a0;">לא נמצאו nodes עם HTML/CSS בworkflow זה</p>';
+        list.innerHTML = '<p style="color: #a0a0a0;">No nodes with HTML/CSS found in this workflow</p>';
         return;
     }
     
@@ -210,7 +215,7 @@ function displayDesignNodes(nodes) {
         
         card.innerHTML = `
             <h3>${node.name}</h3>
-            <p><strong>סוג:</strong> ${node.type}</p>
+            <p><strong>Type:</strong> ${node.type}</p>
             <p><strong>ID:</strong> ${node.id}</p>
             ${badges}
         `;
@@ -255,7 +260,7 @@ async function generateImprovedDesign() {
     const originalCode = document.getElementById('originalCode').value;
     
     showLoading(true);
-    showStatus('יוצר עיצוב משופר...', 'success');
+    showStatus('Creating improved design...', 'success');
     
     // Simulate AI improvement (in real app, this would call an AI service)
     setTimeout(() => {
@@ -301,7 +306,7 @@ async function generateImprovedDesign() {
         document.getElementById('improvedCode').value = improved;
         updatePreview('improved', improved);
         
-        showStatus('עיצוב משופר נוצר בהצלחה!', 'success');
+        showStatus('Improved design created successfully!', 'success');
         document.getElementById('generateImprovedBtn').style.display = 'none';
         document.getElementById('approveBtn').style.display = 'block';
         showLoading(false);
@@ -311,18 +316,18 @@ async function generateImprovedDesign() {
 // Approve and update N8N
 async function approveAndUpdate() {
     if (!currentWorkflow || !currentDesignNode) {
-        alert('אין workflow או node נבחר');
+        alert('No workflow or node selected');
         return;
     }
     
     const improvedCode = document.getElementById('improvedCode').value;
     if (!improvedCode) {
-        alert('אין קוד משופר');
+        alert('No improved code');
         return;
     }
     
     showLoading(true);
-    showStatus('מעדכן workflow ב-N8N...', 'success');
+    showStatus('Updating workflow in N8N...', 'success');
     
     try {
         // Update the node parameters
@@ -347,14 +352,14 @@ async function approveAndUpdate() {
         
         if (!response.ok) throw new Error('Failed to update workflow');
         
-        showStatus('✅ Workflow עודכן בהצלחה ב-N8N!', 'success');
+        showStatus('✅ Workflow updated successfully in N8N!', 'success');
         setTimeout(() => {
             showStatus('', '');
             loadWorkflows(); // Refresh list
         }, 3000);
         
     } catch (error) {
-        showStatus(`שגיאה בעדכון workflow: ${error.message}`, 'error');
+        showStatus(`Error updating workflow: ${error.message}`, 'error');
     } finally {
         showLoading(false);
     }
