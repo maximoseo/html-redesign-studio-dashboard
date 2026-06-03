@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,25 +12,25 @@
         <div class="auth-modal">
             <div class="auth-logo">🎨</div>
             <h2>HTML Redesign Studio</h2>
-            <p class="auth-subtitle">שיפור עיצוב אוטומטי ל-N8N Workflows</p>
+            <p class="auth-subtitle">AI-Powered HTML Redesign Studio</p>
             
             <div id="loginForm">
-                <input type="password" id="authPassword" placeholder="סיסמה" class="auth-input">
+                <input type="password" id="authPassword" placeholder="Password" class="auth-input">
                 <label class="remember-label" style="display:flex;align-items:center;gap:8px;margin:12px 0;cursor:pointer;font-size:14px;color:var(--text-secondary,#aaa);">
                     <input type="checkbox" id="rememberMe" checked>
-                    זכור אותי במחשב זה
+                    Remember me on this computer
                 </label>
-                <button id="authSubmit" class="auth-btn">התחבר</button>
-                <p id="authError" class="auth-error">סיסמה שגויה</p>
-                <a href="#" id="forgotPassword" class="forgot-link">שכחת סיסמה?</a>
+                <button id="authSubmit" class="auth-btn">Login</button>
+                <p id="authError" class="auth-error">Wrong password</p>
+                <a href="#" id="forgotPassword" class="forgot-link">Forgot password?</a>
             </div>
             
             <div id="resetForm" style="display:none;">
-                <p class="reset-info">הזן את כתובת המייל שלך לקבלת קוד איפוס:</p>
+                <p class="reset-info">Enter your email to receive reset code:</p>
                 <input type="email" id="resetEmail" placeholder="service@maximo-seo.com" class="auth-input">
-                <button id="resetSubmit" class="auth-btn">שלח קוד איפוס</button>
-                <button id="backToLogin" class="auth-btn-secondary">חזור להתחברות</button>
-                <p id="resetSuccess" class="auth-success">קוד איפוס נשלח למייל!</p>
+                <button id="resetSubmit" class="auth-btn">Send reset code</button>
+                <button id="backToLogin" class="auth-btn-secondary">Back to login</button>
+                <p id="resetSuccess" class="auth-success">Reset code sent to email!</p>
             </div>
         </div>
     </div>
@@ -40,61 +40,61 @@
         <header>
             <div class="header-left">
                 <h1>🎨 HTML Redesign Studio</h1>
-                <p class="subtitle">שיפור עיצוב אוטומטי ל-N8N Workflows</p>
+                <p class="subtitle">AI-Powered HTML Redesign Studio</p>
             </div>
             <div class="header-right">
-                <button id="refreshBtn" class="btn btn-secondary">🔄 רענן</button>
-                <button id="logoutBtn" class="logout-btn" title="התנתק">🚪</button>
+                <button id="refreshBtn" class="btn btn-secondary">🔄 Refresh</button>
+                <button id="logoutBtn" class="logout-btn" title="Logout">🚪</button>
             </div>
         </header>
 
         <!-- Workflow Selection -->
         <div class="section">
-            <h2>📋 בחר Workflow לעיצוב</h2>
+            <h2>📋 Select Workflow for Design</h2>
             <div class="workflow-selector">
                 <select id="workflowSelect" class="auth-input">
-                    <option value="">-- בחר Workflow --</option>
+                    <option value="">-- Select Workflow --</option>
                 </select>
-                <button id="loadWorkflowBtn" class="btn btn-primary">🔍 טען Workflow</button>
+                <button id="loadWorkflowBtn" class="btn btn-primary">🔍 Load Workflow</button>
             </div>
         </div>
 
         <!-- Workflow Details -->
         <div id="workflowDetails" style="display:none;">
             <div class="section">
-                <h2>🎯 פרטי Workflow</h2>
+                <h2>🎯 Workflow Details</h2>
                 <div id="workflowInfo" class="info-box"></div>
             </div>
 
             <!-- Design Nodes -->
             <div class="section">
-                <h2>🎨 Nodes עם עיצוב (HTML/CSS)</h2>
+                <h2>🎨 Nodes with Design (HTML/CSS)</h2>
                 <div id="designNodesList" class="nodes-list"></div>
             </div>
 
             <!-- Code Editor -->
             <div class="section" id="editorSection" style="display:none;">
-                <h2>✏️ עורך קוד</h2>
+                <h2>✏️ Code Editor</h2>
                 <div class="editor-tabs">
-                    <button class="tab-btn active" data-tab="original">עיצוב מקורי</button>
-                    <button class="tab-btn" data-tab="improved">עיצוב משופר</button>
+                    <button class="tab-btn active" data-tab="original">Original Design</button>
+                                        <button class="tab-btn" data-tab="improved">Improved Design</button>
                 </div>
                 <div class="editor-container">
                     <textarea id="originalCode" class="code-editor" readonly></textarea>
                     <textarea id="improvedCode" class="code-editor" style="display:none;"></textarea>
                 </div>
                 <div class="editor-actions">
-                    <button id="generateImprovedBtn" class="btn btn-primary">✨ צור עיצוב משופר</button>
-                    <button id="approveBtn" class="btn btn-success" style="display:none;">✅ אשר ועדכן N8N</button>
+                    <button id="generateImprovedBtn" class="btn btn-primary">✨ Create Improved Design</button>
+                    <button id="approveBtn" class="btn btn-success" style="display:none;">✅ Approve & Update N8N</button>
                 </div>
             </div>
 
             <!-- Preview -->
             <div class="section" id="previewSection" style="display:none;">
-                <h2>👁️ תצוגה מקדימה</h2>
+                <h2>👁️ Preview</h2>
                 <div class="preview-tabs">
-                    <button class="tab-btn active" data-preview="original">מקורי</button>
-                    <button class="tab-btn" data-preview="improved">משופר</button>
+                    <button class="tab-btn active" data-preview="original">Original</button>
+                                        <button class="tab-btn" data-preview="improved">Improved</button>
                 </div>
                 <div class="preview-container">
                     <iframe id="originalPreview" class="preview-frame"></iframe>
@@ -109,7 +109,7 @@
         <!-- Loading -->
         <div id="loadingOverlay" class="loading-overlay" style="display:none;">
             <div class="spinner"></div>
-            <p>טוען...</p>
+            <p>Loading...</p>
         </div>
     </div>
 
@@ -135,13 +135,13 @@
     17|    
     18|    <div id="pc-chat-messages" class="pc-chat-messages">
     19|      <div class="pc-message pc-system">
-    20|        <p>👋 שלום! שלח משימה ואעביר אותה לצוות Paperclip של <strong id="pc-company-msg">MaximoSEO</strong>.</p>
-    21|        <p style="margin-top:8px;font-size:12px;opacity:0.7;">דוגמאות: "בדוק את כל ה-workflows שנכשלו", "עדכן את דף הבית של galoz.co.il"</p>
+    20|        <p>👋 Hello! Send a task and I'll forward it to the Paperclip team at <strong id="pc-company-msg">MaximoSEO</strong>.</p>
+    21|        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Examples: "Check all failed workflows", "Update the homepage of galoz.co.il"</p>
     22|      </div>
     23|    </div>
     24|    
     25|    <div class="pc-chat-input-area">
-    26|      <textarea id="pc-chat-input" class="pc-chat-input" placeholder="כתוב משימה..." rows="2"></textarea>
+    26|      <textarea id="pc-chat-input" class="pc-chat-input" placeholder="Type a task..." rows="2"></textarea>
     27|      <button id="pc-chat-send" class="pc-chat-send-btn">
     28|        <span>📤</span>
     29|      </button>
@@ -453,13 +453,13 @@
    335|    tasks.push(task);
    336|    saveTasks();
    337|
-   338|    addMessage(`⏳ שולח משימה <code>${taskId}</code> ל-${PC_CONFIG.company}...`, 'status');
+   338|    addMessage(`⏳ Sending task <code>${taskId}</code> to ${PC_CONFIG.company}...`, 'status');
    339|
    340|    try {
    341|      // Send to Telegram Bot
-   342|      const msg = `🆕 משימה חדשה מ-${PC_CONFIG.dashboardName}\n\n` +
-   343|                  `🏢 חברה: ${PC_CONFIG.company}\n` +
-   344|                  `📋 משימה: ${text}\n` +
+   342|      const msg = `🆕 New task from ${PC_CONFIG.dashboardName}\\n\\n` +
+   343|                  `🏢 Company: ${PC_CONFIG.company}\\n` +
+   344|                  `📋 Task: ${text}\\n` +
    345|                  `🆔 ID: ${taskId}`;
    346|
    347|      if (PC_CONFIG.telegramBotToken && PC_CONFIG.telegramChatId) {
@@ -476,7 +476,7 @@
    358|        if (res.ok) {
    359|          task.status = 'delivered';
    360|          saveTasks();
-   361|          addMessage(`✅ המשימה נשלחה ל-Paperclip!\n<code>${taskId}</code>\n\nהצוות של <strong>${PC_CONFIG.company}</strong> יעדכן כשיבוצע.`, 'system');
+   361|          addMessage(`✅ Task sent to Paperclip!\n<code>${taskId}</code>\n\nThe <strong>${PC_CONFIG.company}</strong> team will update when it's done.`, 'system');
    362|        } else {
    363|          throw new Error('Telegram API error');
    364|        }
@@ -484,12 +484,12 @@
    366|        // Fallback: store locally and show confirmation
    367|        task.status = 'queued';
    368|        saveTasks();
-   369|        addMessage(`📨 המשימה נשמרה בתור!\n<code>${taskId}</code>\n\nתועבר ל-Paperclip כשהחיבור יהיה זמין.`, 'system');
+   369|        addMessage(`📨 Task saved in queue!\n<code>${taskId}</code>\n\nWill be forwarded to Paperclip when connection is available.`, 'system');
    370|      }
    371|    } catch (err) {
    372|      task.status = 'error';
    373|      saveTasks();
-   374|      addMessage(`❌ שגיאה בשליחה. המשימה נשמרה מקומית ותישלח מאוחר יותר.`, 'error');
+   374|      addMessage(`❌ Error sending. Task saved locally and will be sent later.`, 'error');
    375|    }
    376|
    377|    sendBtn.disabled = false;
@@ -513,7 +513,7 @@
    395|        existing.status = t.status;
    396|        existing.result = t.result;
    397|        if (t.status === 'completed') {
-   398|          addMessage(`✅ <strong>${t.id}</strong> בוצעה!\n${t.result || ''}`, 'status');
+   398|          addMessage(`✅ <strong>${t.id}</strong> completed!\n${t.result || ''}`, 'status');
    399|          if (panel.style.display === 'none') {
    400|            unreadCount++;
    401|            badge.textContent = unreadCount;
@@ -530,7 +530,7 @@
    412|  // Show pending tasks on load
    413|  const pending = tasks.filter(t => t.status === 'sent' || t.status === 'queued');
    414|  if (pending.length > 0) {
-   415|    addMessage(`📋 ${pending.length} משימ${pending.length > 1 ? 'ות' : 'ה'} ממתינ${pending.length > 1 ? 'ות' : 'ה'} לתשובה.`, 'status');
+   415|    addMessage(`📋 ${pending.length} pending task${pending.length > 1 ? 's' : ''} awaiting response.`, 'status');
    416|  }
    417|})();
    418|</script>
